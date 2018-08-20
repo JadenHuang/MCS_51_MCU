@@ -16,9 +16,14 @@
 
 void DELAY_MS(uint t);
 uint keyscan();
-void leddisplay();
+void leddisplay(uchar key_number);
 
 uint number;
+
+uchar code seg_table[]={0x3f,0x06,0x5b,0x4f,
+                        0x66,0x6d,0x7d,0x07,
+                        0x7f,0x6f,0x77,0x7c,
+                        0x39,0x5e,0x79,0x71};
 
 /*********************************************************************************************
 函数名：毫秒级CPU延时函数
@@ -28,33 +33,38 @@ uint number;
 结  果：
 备  注：
 /*********************************************************************************************/
-void leddisplay()
+void leddisplay(uchar key_number)
 {
-	P0=0XF0;
+	P0=seg_table[key_number];
 }
 
 
 /*********************************************************************************************
-函数名：毫秒级CPU延时函数
-调  用：void keyscane();
+函数名：按键处理函数
+调  用：uint keyscane();
 参  数：无
-返回值：无
+返回值：按键代码
 结  果：
 备  注：
 /*********************************************************************************************/
 uint keyscane()
 {
-	uchar key,b;
-	P1=0xf0;
-	key=P0;
-	if((key!=0xf0))
+	uchar key_1,key_2,b,d;
+	P2=0x0f;
+	key_1=P2;
+
+	if((key_1!=0x0f))
 	{	
-		DELAY_MS(100);
-		key=P1;
-		if(key!=0xf0)
+		DELAY_MS(10);
+		key_1=P2;
+		if(key_1!=0x0f)
 		{
-			switch(key)
+			P2=0xf0;
+			key_2=P2;
+			d=key_1|key_2;
+			switch(d)
 			{
+
 			   case 0xee: b = 1; break;
 			   case 0xed: b = 2; break;
 			   case 0xeb: b = 3; break;
@@ -114,18 +124,7 @@ void main()
 
 	while(1)
 	{
-		number=keyscane();
-		if(number==3)
-		{
-			P0=0x10;
-		}
-		if(number==1)
-		{
-			P0=0x20;
-		}
-		if(number==2)
-		{
-			P0=0x40;
-		}
+		number=keyscane();	
+		leddisplay(number);
 	}
 }
