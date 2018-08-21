@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"main.obj" 
+TO "serial_interrupt" 
+RAMSIZE(256) 
