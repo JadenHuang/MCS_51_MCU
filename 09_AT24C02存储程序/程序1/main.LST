@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/10/2018 18:04:54 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/11/2018 07:07:16 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   53          void DELAY_US(uchar T)
   54          {
   55   1              while(T-- !=0);
-C51 COMPILER V7.50   MAIN                                                                  09/10/2018 18:04:54 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  09/11/2018 07:07:16 PAGE 2   
 
   56   1      }
   57          
@@ -126,7 +126,7 @@ line level    source
  115   2              }
  116   1              I2C_SDA=1;
  117   1              DELAY_US(4);
-C51 COMPILER V7.50   MAIN                                                                  09/10/2018 18:04:54 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  09/11/2018 07:07:16 PAGE 3   
 
  118   1              I2C_SCL=1;
  119   1              DELAY_US(4);
@@ -190,7 +190,7 @@ line level    source
  177   2      
  178   2                      I2C_SDA=0;
  179   2                      DELAY_US(4);
-C51 COMPILER V7.50   MAIN                                                                  09/10/2018 18:04:54 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  09/11/2018 07:07:16 PAGE 4   
 
  180   2                      I2C_SCL=1;
  181   2                      DELAY_US(12);
@@ -228,11 +228,11 @@ line level    source
  213          uchar AT24C02_read_Byte(uchar Address)
  214          {
  215   1              I2C_start();
- 216   1              I2C_send_dat(0xa1);
+ 216   1              I2C_send_dat(0xa0);
  217   1              I2C_send_dat(Address);
  218   1      
  219   1              I2C_start();
- 220   1              I2C_send_dat(0xa0);
+ 220   1              I2C_send_dat(0xa1);
  221   1              Dat_Number=I2C_read_dat();
  222   1              I2C_send_ask(0);
  223   1              I2C_stop();
@@ -254,47 +254,72 @@ line level    source
  239   1              {
  240   2                      DELAY_MS(20);
  241   2                      if(KEY_1==0)
-C51 COMPILER V7.50   MAIN                                                                  09/10/2018 18:04:54 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  09/11/2018 07:07:16 PAGE 5   
 
  242   2                      {
- 243   3                              Number=0x0a;
+ 243   3                              Number=Number++;
  244   3                              DELAY_MS(50);
- 245   3                      }
- 246   2              }
- 247   1      }
- 248          
- 249          /*********************************************************************************************
- 250          函数名：main()
- 251          调  用：
- 252          参  数：
- 253          返回值：
- 254          结  果：
- 255          备  注：
- 256          /*********************************************************************************************/
- 257          void main()
- 258          {
- 259   1              Number = 0x00;
- 260   1              Current_Number = AT24C02_read_Byte(0x01);
- 261   1              while(1)
- 262   1              {
- 263   2                      keyscane();
- 264   2                      if(Number == 0x0a)
- 265   2                      {
- 266   3                              AT24C02_write_Byte(0x02,0xaa);
- 267   3                      }       
- 268   2                      P0=Current_Number;
- 269   2              }
- 270   1      
- 271   1      }
+ 245   3                              if(Number ==255)
+ 246   3                              {
+ 247   4                                      Number =0;
+ 248   4                              }
+ 249   3                      }
+ 250   2              }
+ 251   1      }
+ 252          
+ 253          /*********************************************************************************************
+ 254          函数名：main()
+ 255          调  用：
+ 256          参  数：
+ 257          返回值：
+ 258          结  果：
+ 259          备  注：
+ 260          /*********************************************************************************************/
+ 261          void main()
+ 262          {
+ 263   1              Number = 0;
+ 264   1              Current_Number =0;
+ 265   1              AT24C02_write_Byte(5,0);
+ 266   1              DELAY_MS(100);
+ 267   1              Current_Number = AT24C02_read_Byte(5);
+ 268   1              while(1)
+ 269   1              {       
+ 270   2                      AT24C02_write_Byte(5,1);
+ 271   2                      DELAY_MS(100);  
+ 272   2                      Current_Number = AT24C02_read_Byte(5);
+ 273   2                      P0=Current_Number;
+ 274   2                      DELAY_MS(100);
+ 275   2      
+ 276   2                      AT24C02_write_Byte(5,2);
+ 277   2                      DELAY_MS(100);  
+ 278   2                      Current_Number = AT24C02_read_Byte(5);
+ 279   2                      P0=Current_Number;
+ 280   2      
+ 281   2      
+ 282   2                      AT24C02_write_Byte(5,4);
+ 283   2                      DELAY_MS(100);  
+ 284   2                      Current_Number = AT24C02_read_Byte(5);
+ 285   2                      P0=Current_Number;
+ 286   2      
+ 287   2      
+ 288   2                      AT24C02_write_Byte(5,8);
+ 289   2                      DELAY_MS(100);  
+ 290   2                      Current_Number = AT24C02_read_Byte(5);
+ 291   2                      P0=Current_Number;
+ 292   2              }
+ 293   1      
+ 294   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    312    ----
+   CODE SIZE        =    367    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      3    ----
    IDATA SIZE       =   ----    ----
+C51 COMPILER V7.50   MAIN                                                                  09/11/2018 07:07:16 PAGE 6   
+
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

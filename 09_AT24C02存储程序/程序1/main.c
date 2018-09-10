@@ -213,11 +213,11 @@ void AT24C02_write_Byte(uchar Address,uchar dat)
 uchar AT24C02_read_Byte(uchar Address)
 {
 	I2C_start();
-	I2C_send_dat(0xa1);
+	I2C_send_dat(0xa0);
 	I2C_send_dat(Address);
 
 	I2C_start();
-	I2C_send_dat(0xa0);
+	I2C_send_dat(0xa1);
 	Dat_Number=I2C_read_dat();
 	I2C_send_ask(0);
 	I2C_stop();
@@ -240,8 +240,12 @@ void keyscane()
 		DELAY_MS(20);
 		if(KEY_1==0)
 		{
-			Number=0x0a;
+			Number=Number++;
 			DELAY_MS(50);
+			if(Number ==255)
+			{
+				Number =0;
+			}
 		}
 	}
 }
@@ -256,15 +260,34 @@ void keyscane()
 /*********************************************************************************************/
 void main()
 {
-	Number = 0x00;
-	Current_Number = AT24C02_read_Byte(0x01);
+	Number = 0;
+	Current_Number =0;
+	AT24C02_write_Byte(5,0);
+	DELAY_MS(100);
+	Current_Number = AT24C02_read_Byte(5);
 	while(1)
-	{
-		keyscane();
-		if(Number == 0x0a)
-		{
-			AT24C02_write_Byte(0x02,0xaa);
-		}	
+	{	
+		AT24C02_write_Byte(5,1);
+		DELAY_MS(100);	
+		Current_Number = AT24C02_read_Byte(5);
+		P0=Current_Number;
+		DELAY_MS(100);
+
+		AT24C02_write_Byte(5,2);
+		DELAY_MS(100);	
+		Current_Number = AT24C02_read_Byte(5);
+		P0=Current_Number;
+
+
+		AT24C02_write_Byte(5,4);
+		DELAY_MS(100);	
+		Current_Number = AT24C02_read_Byte(5);
+		P0=Current_Number;
+
+
+		AT24C02_write_Byte(5,8);
+		DELAY_MS(100);	
+		Current_Number = AT24C02_read_Byte(5);
 		P0=Current_Number;
 	}
 
