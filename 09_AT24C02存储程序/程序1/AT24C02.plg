@@ -1,0 +1,40 @@
+<html>
+<body>
+<pre>
+<h1>礦ision2 Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Jaden\Documents\51单片机学习\09_AT24C02存储程序\程序1\AT24C02.uv2
+Project File Date:  09/10/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+MAIN.C(219): error C208: 'I2C_read_dat': too many actual parameters
+MAIN.C(235): error C202: 'KEY_1': undefined identifier
+MAIN.C(238): error C202: 'KEY_1': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(221): error C208: 'I2C_read_dat': too many actual parameters
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SEND_ASK?MAIN
+Program Size: data=12.0 xdata=0 code=315
+"AT24C02" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+Program Size: data=12.0 xdata=0 code=320
+"AT24C02" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+Program Size: data=12.0 xdata=0 code=327
+"AT24C02" - 0 Error(s), 0 Warning(s).
